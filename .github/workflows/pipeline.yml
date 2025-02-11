@@ -25,7 +25,7 @@ jobs:
       - name: e2e tests, Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: e2e tests, Run Playwright tests
-        run: npx playwright test
+        run: npm run test:e2e
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
