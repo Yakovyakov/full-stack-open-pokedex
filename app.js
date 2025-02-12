@@ -14,6 +14,10 @@ app.listen(PORT, () => {
 })
 // added a comment
 // code for deployment
+app.get('/version', (req, res) => {
+  res.send('1')
+})
+
 app.get('/health', (req, res) => {
   res.send('Ok')
 })
