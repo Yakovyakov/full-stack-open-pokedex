@@ -19,6 +19,5 @@ app.get('/version', (req, res) => {
 })
 
 app.get('/health', (req, res) => {
-  res.send('Ok');;
-  hh
+  res.send('Ok')
 })
