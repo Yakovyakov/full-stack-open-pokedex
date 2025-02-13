@@ -15,23 +15,28 @@ jobs:
         with:
           node-version: '20'
       - name: Install dependencies 
-        - run: echo "LAST_STEP=Install_dependencies" >> $GITHUB_ENV
-        - run: npm install  
+        run: |
+          echo "LAST_STEP=Install_dependencies" >> $GITHUB_ENV
+          npm install  
 
       - name: Check style
-        - run: echo "LAST_STEP=Check_style" >> $GITHUB_ENV
-        - run: npm run eslint
+        run: | 
+          echo "LAST_STEP=Check_style" >> $GITHUB_ENV
+          npm run eslint
       
       - name: build
-        - run: echo "LAST_STEP=Build" >> $GITHUB_ENV
-        - run: npm run build
+        run: | 
+          echo "LAST_STEP=Build" >> $GITHUB_ENV
+          npm run build
 
       - name: test
-        - run: echo "LAST_STEP=Test" >> $GITHUB_ENV
-        - run: npm run test
+        run: |
+          echo "LAST_STEP=Test" >> $GITHUB_ENV
+          npm run test
       - name: e2e tests, Install Playwright Browsers
-        - run: echo "LAST_STEP=Test_e2e" >> $GITHUB_ENV
-        - run: npx playwright install --with-deps
+        run: |
+          echo "LAST_STEP=Test_e2e" >> $GITHUB_ENV
+          npx playwright install --with-deps
       - name: e2e tests, Run Playwright tests
         run: npm run test:e2e
       - uses: actions/upload-artifact@v4
