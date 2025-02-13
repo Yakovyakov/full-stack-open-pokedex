@@ -51,7 +51,7 @@ jobs:
         with:
           severity: error
           text: Build failed!
-          details: "$LAST_STEP Failed!"
+          details: "${{ LAST_STEP }} Failed!"
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:  
     if: ${{ github.event_name == 'push' && !contains(toJson(github.event.commits.*.message),'#SKIP')}}
