@@ -64,7 +64,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Trigger deployment
-        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+        run: |
+          response=$(curl -o /dev/null -w "%{http_code}" "https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}")
+          if [ $response -eq 200 ]; then
+            echo "Deployment started successfully"
+          else
+            echo "Deployment failed with HTTP code: $response"
+            exit 1
+          fi
       - name: Discord notify on success
         uses: rjstone/discord-webhook-notify@v1
         if: success()
