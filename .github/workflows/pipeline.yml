@@ -51,7 +51,7 @@ jobs:
         with:
           severity: error
           text: Build failed!
-          details: "$LAST_STEP Failed!"
+          details: "${{ env.LAST_STEP }} Failed!"
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:  
     if: ${{ github.event_name == 'push' && !contains(toJson(github.event.commits.*.message),'#SKIP')}}
@@ -70,6 +70,16 @@ jobs:
         if: success()
         with:
           severity: info
-          text: A new version of Pokedex deployed 
+          text: A new version of Pokedex deployed
+          description: 'to ${{ secrets.URL_APP_RENDER}} by ${{ github.event.head_commit.author.name }}'
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Discord notify on failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: failure()
+        with:
+          severity: error
+          text: Build failed!
+          description: 'commit\n${{ github.event.head_commit.url }} by ${{ github.event.head_commit.author.name }}
+            broke the build :('
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
         
